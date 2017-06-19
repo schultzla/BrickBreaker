@@ -8,7 +8,7 @@ public class Paddle {
     private boolean rightAccel, leftAccel;
     private int player, y;
     private final double FRICTION = 0.94;
-    private final int PADDLE_WIDTH = 80, PADDLE_HEIGHT = 20;
+    private final int PADDLE_WIDTH = 70, PADDLE_HEIGHT = 15;
 
     public Paddle() {
         rightAccel = false; leftAccel = false;

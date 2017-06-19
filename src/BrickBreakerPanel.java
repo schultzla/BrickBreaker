@@ -11,11 +11,36 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
     private Thread thread;
     private Ball ball;
     private Paddle paddle;
+    private Brick[][] brick;
 
     public BrickBreakerPanel(BrickBreaker game) {
         this.game = game;
         ball = new Ball();
+        brick = new Brick[3][5];
         paddle = new Paddle();
+        int x = 38, y = 20;
+        for(int i = 0; i < 3; i++) {
+            x = 38;
+            int spacing = 0;
+            switch(i) {
+                case 0:
+                    spacing = 20;
+                    break;
+                case 1:
+                    spacing = 45;
+                    break;
+                case 2:
+                    spacing = 70;
+                    break;
+                default:
+                    spacing = 0;
+            }
+            y = spacing;
+            for(int j = 0; j < 5; j++) {
+                brick[i][j] = new Brick(x, y);
+                x += brick[i][j].getWidth() + 5;
+            }
+        }
 
         setFocusable(true);
         addKeyListener(this);
@@ -33,6 +58,11 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         g.setColor(Color.black);
         ball.draw(g);
         paddle.draw(g);
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 5; j++) {
+                brick[i][j].draw(g);
+            }
+        }
     }
 
     @Override

@@ -1,13 +1,9 @@
 import java.awt.*;
-import java.util.Random;
-
 /**
  * Created by Logan on 6/9/2017.
  */
 public class Ball {
     private static double xVel, yVel, x, y;
-    Random r = new Random();
-
     public Ball() {
         x = BrickBreaker.getFrameWidth()/2;
         y = BrickBreaker.getFrameHeight()/2;
@@ -20,8 +16,14 @@ public class Ball {
         if(y > p.getY() - 15) {
             if(x >= p.getX() && x <= p.getX() + p.getWidth()) {
                 yVel = -yVel;
+            } else {
+                y = BrickBreaker.getFrameHeight()/2;
             }
         }
+
+
+
+
     }
 
     public void move() {
@@ -37,7 +39,7 @@ public class Ball {
 
     public void draw(Graphics g) {
         g.setColor(Color.black);
-        g.fillOval((int)x - 15, (int)y - 15, 30, 30);
+        g.fillOval((int)x - 10, (int)y - 10, 20, 20);
     }
 
     public int getX() {
