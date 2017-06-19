@@ -65,12 +65,25 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    public static void checkBricks(Brick brick, Ball ball) {
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 5; j++) {
+                brick.checkHealth(ball);
+            }
+        }
+    }
+
     @Override
     public void run() {
         while(true) {
             paddle.move();
             ball.move(paddle);
             ball.checkCollision(paddle);
+            for(Brick[] row : brick) {
+                for(Brick brick : row) {
+                    checkBricks(brick, ball);
+                }
+            }
 
             repaint();
             try {

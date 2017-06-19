@@ -14,8 +14,17 @@ public class Brick {
         health = 100;
     }
 
-    public void checkHealth() {
 
+
+    public void checkHealth(Ball b) {
+        if(b.getTop() == getTop() || b.getBtm() == getBtm()) {
+            if(b.getLeft() > x || b.getLeft() < getWidthArea()) {
+                if(b.getRight() > x || b.getRight() < getWidthArea()) {
+                    health -= 50;
+                    b.setyVel(-(b.getyVel()));
+                }
+            }
+        }
     }
 
     public int getWidth() {
@@ -25,9 +34,19 @@ public class Brick {
     public void draw(Graphics g) {
         if(health == 100) {
             g.setColor(Color.black);
-        } else if (health == 50) {
+        } else if (health <= 50) {
             g.setColor(Color.red);
         }
         g.fillRect(x, y, WIDTH, HEIGHT);
+    }
+
+    public int getTop() {
+        return (int)y + HEIGHT;
+    }
+    public int getBtm() {
+        return (int)y;
+    }
+    public int getWidthArea() {
+        return (int)x + WIDTH;
     }
 }

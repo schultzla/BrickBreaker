@@ -4,7 +4,7 @@ import javax.swing.*;
  * Created by Logan on 6/9/2017.
  */
 public class BrickBreaker extends JFrame {
-    private static final int WIDTH = 400, HEIGHT = 700;
+    private static final int WIDTH = 400, HEIGHT = 500;
 
     public BrickBreaker() {
         BrickBreakerPanel panel = new BrickBreakerPanel(this);

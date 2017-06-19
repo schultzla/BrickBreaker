@@ -18,7 +18,7 @@ public class Ball {
 
     public void checkCollision(Paddle p) {
         if(y > p.getY() - 10) {
-            if (x >= p.getX() && x <= p.getX() + p.getWidth()) {
+            if (x >= p.getX() - 2 && x <= p.getX() + p.getWidth() + 2) {
                 yVel = -yVel;
             } else {
                 y = p.getY() - 10;
@@ -44,9 +44,9 @@ public class Ball {
             y += yVel;
         }
 
-        if(x < 15 || x > BrickBreaker.getFrameWidth() - 20) {
+        if(x < 10 || x > BrickBreaker.getFrameWidth() - 15) {
             xVel = -xVel;
-        } else if (y < 15) {
+        } else if (y < 10) {
             yVel = -yVel;
         }
         if(restart) {
@@ -59,11 +59,32 @@ public class Ball {
         g.fillOval((int)x - 10, (int)y - 10, 20, 20);
     }
 
-    public int getX() {
-        return (int)x;
+    public void setxVel(double val) {
+        xVel = val;
     }
 
-    public int getY() {
-        return (int)y;
+    public void setyVel(double val) {
+        yVel = val;
+    }
+
+    public double getyVel() {
+        return yVel;
+    }
+
+    public double getxVel() {
+        return xVel;
+    }
+
+    public int getTop() {
+        return (int)y - 10;
+    }
+    public int getBtm() {
+        return (int)y + 10;
+    }
+    public int getRight() {
+        return (int)x - 10;
+    }
+    public int getLeft() {
+        return (int)x + 10;
     }
 }
