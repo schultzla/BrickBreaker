@@ -15,9 +15,9 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
 
     public BrickBreakerPanel(BrickBreaker game) {
         this.game = game;
-        ball = new Ball();
         brick = new Brick[3][5];
         paddle = new Paddle();
+        ball = new Ball(paddle);
         int x = 38, y = 20;
         for(int i = 0; i < 3; i++) {
             x = 38;
@@ -69,7 +69,7 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
     public void run() {
         while(true) {
             paddle.move();
-            ball.move();
+            ball.move(paddle);
             ball.checkCollision(paddle);
 
             repaint();
@@ -92,6 +92,12 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
             paddle.setRightAccel(true);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             paddle.setLeftAccel(true);
+        }
+
+        if(ball.restart) {
+            if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                ball.launchBall();
+            }
         }
     }
 
