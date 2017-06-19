@@ -2,49 +2,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  * Created by Logan on 6/9/2017.
  */
-public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
-    private BrickBreaker game;
-    private Thread thread;
+class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
     private Ball ball;
     private Paddle paddle;
-    private Brick[][] brick;
+    private Brick[] bricks;
 
-    public BrickBreakerPanel(BrickBreaker game) {
-        this.game = game;
-        brick = new Brick[3][5];
+    BrickBreakerPanel() {
         paddle = new Paddle();
         ball = new Ball(paddle);
-        int x = 38, y = 20;
+        bricks = new Brick[15];
+        int y = 20, x = 38;
+        int counter = 0;
         for(int i = 0; i < 3; i++) {
             x = 38;
-            int spacing = 0;
-            switch(i) {
-                case 0:
-                    spacing = 20;
-                    break;
-                case 1:
-                    spacing = 45;
-                    break;
-                case 2:
-                    spacing = 70;
-                    break;
-                default:
-                    spacing = 0;
-            }
-            y = spacing;
             for(int j = 0; j < 5; j++) {
-                brick[i][j] = new Brick(x, y);
-                x += brick[i][j].getWidth() + 5;
+                bricks[counter] = new Brick(x, y);
+                counter++;
+                x += 65;
             }
+            y += 25;
         }
-
         setFocusable(true);
         addKeyListener(this);
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 
@@ -58,20 +43,11 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         g.setColor(Color.black);
         ball.draw(g);
         paddle.draw(g);
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 5; j++) {
-                brick[i][j].draw(g);
-            }
+        for(int i = 0; i < bricks.length; i++) {
+            bricks[i].draw(g);
         }
     }
 
-    public static void checkBricks(Brick brick, Ball ball) {
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 5; j++) {
-                brick.checkHealth(ball);
-            }
-        }
-    }
 
     @Override
     public void run() {
@@ -79,11 +55,10 @@ public class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
             paddle.move();
             ball.move(paddle);
             ball.checkCollision(paddle);
-            for(Brick[] row : brick) {
-                for(Brick brick : row) {
-                    checkBricks(brick, ball);
-                }
+            for(Brick brick : bricks) {
+                ball.checkBrickCollis(brick);
             }
+
 
             repaint();
             try {

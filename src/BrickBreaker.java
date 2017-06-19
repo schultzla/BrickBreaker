@@ -1,18 +1,17 @@
 import javax.swing.*;
-
 /**
  * Created by Logan on 6/9/2017.
  */
 public class BrickBreaker extends JFrame {
     private static final int WIDTH = 400, HEIGHT = 500;
 
-    public BrickBreaker() {
-        BrickBreakerPanel panel = new BrickBreakerPanel(this);
+    private BrickBreaker() {
+        BrickBreakerPanel panel = new BrickBreakerPanel();
         getContentPane().add(panel);
         setSize(WIDTH, HEIGHT);
         setResizable(false);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Brick Breaker");
     }
 
@@ -20,7 +19,7 @@ public class BrickBreaker extends JFrame {
         new BrickBreaker();
     }
 
-    public static int getFrameWidth() { return WIDTH; }
-    public static int getFrameHeight() { return HEIGHT; }
+    static int getFrameWidth() { return WIDTH; }
+    static int getFrameHeight() { return HEIGHT; }
 
 }

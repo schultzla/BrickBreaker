@@ -3,34 +3,33 @@ import java.awt.*;
 /**
  * Created by Logan on 6/9/2017.
  */
-public class Paddle {
+class Paddle {
     private double x, xVel;
     private boolean rightAccel, leftAccel;
-    private int player, y;
-    private final double FRICTION = 0.94;
-    private final int PADDLE_WIDTH = 70, PADDLE_HEIGHT = 15;
+    private int y;
+    private static final int PADDLE_WIDTH = 70, PADDLE_HEIGHT = 15;
 
-    public Paddle() {
+    Paddle() {
         rightAccel = false; leftAccel = false;
         y = BrickBreaker.getFrameHeight() - 75;
         x = BrickBreaker.getFrameWidth()/2;
         xVel = 0;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return PADDLE_WIDTH;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public void move() {
+    void move() {
         if(rightAccel) {
             xVel += 2;
         } else if (leftAccel) {
             xVel -= 2;
-        } else if (!leftAccel && !rightAccel) {
+        } else {
             xVel = 0;
         }
 
@@ -49,25 +48,20 @@ public class Paddle {
         }
     }
 
-    public void draw(Graphics g) {
+    void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect((int)x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
-    public void setRightAccel(boolean input) {
+    void setRightAccel(boolean input) {
         rightAccel = input;
     }
 
-    public void setLeftAccel(boolean input) {
+    void setLeftAccel(boolean input) {
         leftAccel = input;
     }
 
-    public int getX() {
+    int getX() {
         return (int)x;
     }
-
-    public static void log(Double d) {
-        System.out.println(d);
-    }
-
 }
