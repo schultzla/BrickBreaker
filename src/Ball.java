@@ -5,9 +5,10 @@ import java.awt.*;
 class Ball {
     private static double xVel, yVel, x, y;
     boolean restart = false;
+    private int WIDTH = 20, HEIGHT = 20;
 
     Ball(Paddle p) {
-        y = p.getY() - 10;
+        y = p.getY() - HEIGHT/2;
         x = p.getX();
         xVel = 0;
         yVel = 0;
@@ -15,11 +16,11 @@ class Ball {
     }
 
     void checkCollision(Paddle p) {
-        if(y > p.getY() - 10) {
+        if(y > p.getY() - HEIGHT/2) {
             if (x >= p.getX() - 2 && x <= p.getX() + p.getWidth() + 2) {
                 yVel = -yVel;
             } else {
-                y = p.getY() - 10;
+                y = p.getY() - HEIGHT/2;
                 x = p.getX();
                 xVel = 0;
                 yVel = 0;
@@ -28,19 +29,8 @@ class Ball {
         }
     }
 
-    void checkBrickCollis(Brick b) {
-        if(y < b.getY() + b.getHeight() + 15) {
-            if(x >= b.getX() - 15 && x <= b.getX() + b.getWidth() + 15) {
-                yVel = -yVel;
-                if(b.getHealth() > 0) {
-                    b.updateHealth();
-                }
-            }
-        }
-    }
-
     void launchBall() {
-        xVel = -4;
+        xVel = -3;
         yVel = -5;
         restart = false;
     }
@@ -49,9 +39,9 @@ class Ball {
         x += xVel;
         y += yVel;
 
-        if(x < 15 || x > BrickBreaker.getFrameWidth() - 20) {
+        if(x < WIDTH/2 - 5 || x > BrickBreaker.getFrameWidth() - WIDTH/2 - 10) {
             xVel = -xVel;
-        } else if (y < 15) {
+        } else if (y < HEIGHT/2 + 5) {
             yVel = -yVel;
         }
         if(restart) {
@@ -61,6 +51,18 @@ class Ball {
 
     void draw(Graphics g) {
         g.setColor(Color.black);
-        g.fillOval((int)x - 10, (int)y - 10, 20, 20);
+        g.fillOval((int)x - WIDTH/2, (int)y - HEIGHT/2, WIDTH, HEIGHT);
     }
+
+    int getWidth() { return WIDTH; }
+    int getHeight() { return HEIGHT; }
+    double getX() { return x; }
+    double getY() { return y; }
+    double getxVel() { return xVel; }
+
+    void setxVel(double newXVelocity) { yVel = newXVelocity; }
+
+    double getyVel() { return yVel; }
+
+    void setyVel(double newYVelocity) { yVel = newYVelocity; }
 }

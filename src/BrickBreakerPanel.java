@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 /**
  * Created by Logan on 6/9/2017.
@@ -18,9 +17,9 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         bricks = new Brick[15];
         int y = 20, x = 38;
         int counter = 0;
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             x = 38;
-            for(int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++) {
                 bricks[counter] = new Brick(x, y);
                 counter++;
                 x += 65;
@@ -37,7 +36,6 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         paint(g);
     }
 
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.black);
@@ -48,7 +46,6 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-
     @Override
     public void run() {
         while(true) {
@@ -56,10 +53,12 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
             ball.move(paddle);
             ball.checkCollision(paddle);
             for(Brick brick : bricks) {
-                ball.checkBrickCollis(brick);
+                if (brick.getHealth() == 0) {
+                    brick = null;
+                } else {
+                    brick.checkHit(ball);
+                }
             }
-
-
             repaint();
             try {
                 Thread.sleep(10);
