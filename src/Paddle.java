@@ -4,15 +4,15 @@ import java.awt.*;
  * Created by Logan on 6/9/2017.
  */
 class Paddle {
+    private static final int PADDLE_WIDTH = 70, PADDLE_HEIGHT = 15;
     private double x, xVel;
     private boolean rightAccel, leftAccel;
     private int y;
-    private static final int PADDLE_WIDTH = 70, PADDLE_HEIGHT = 15;
 
     Paddle() {
         rightAccel = false; leftAccel = false;
         y = BrickBreaker.getFrameHeight() - 75;
-        x = BrickBreaker.getFrameWidth()/2;
+        x = BrickBreaker.getFrameWidth()/2 - PADDLE_WIDTH/2;
         xVel = 0;
     }
 

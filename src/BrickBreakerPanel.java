@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Logan on 6/9/2017.
@@ -9,18 +11,20 @@ import java.awt.event.KeyListener;
 class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
     private Ball ball;
     private Paddle paddle;
-    private Brick[] bricks;
+    private int lives;
+    private ArrayList<Brick> bricks;
 
     BrickBreakerPanel() {
+        lives = 3;
         paddle = new Paddle();
         ball = new Ball(paddle);
-        bricks = new Brick[15];
+        bricks = new ArrayList<Brick>();
         int y = 20, x = 38;
         int counter = 0;
         for (int i = 0; i < 3; i++) {
             x = 38;
             for (int j = 0; j < 5; j++) {
-                bricks[counter] = new Brick(x, y);
+                bricks.add(new Brick(x, y));
                 counter++;
                 x += 65;
             }
@@ -38,11 +42,20 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.black);
-        ball.draw(g);
-        paddle.draw(g);
-        for(int i = 0; i < bricks.length; i++) {
-            bricks[i].draw(g);
+        if(bricks.size() == 0) {
+            g.setColor(Color.red);
+            g.drawString("You Won!", 10, 460);
+        } else if (lives < 0) {
+            g.setColor(Color.red);
+            g.drawString("Out Of Lives!", 10, 460);
+        } else {
+            g.setColor(Color.black);
+            ball.draw(g);
+            paddle.draw(g);
+            g.drawString("Lives: " + lives, 10, 460);
+            for(Brick brick : bricks) {
+                brick.draw(g);
+            }
         }
     }
 
@@ -52,9 +65,11 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
             paddle.move();
             ball.move(paddle);
             ball.checkCollision(paddle);
-            for(Brick brick : bricks) {
+            Iterator<Brick> it = bricks.iterator();
+            while(it.hasNext()) {
+                Brick brick = it.next();
                 if (brick.getHealth() == 0) {
-                    brick = null;
+                    it.remove();
                 } else {
                     brick.checkHit(ball);
                 }
@@ -84,6 +99,7 @@ class BrickBreakerPanel extends JPanel implements Runnable, KeyListener {
         if(ball.restart) {
             if(e.getKeyCode() == KeyEvent.VK_SPACE) {
                 ball.launchBall();
+                lives--;
             }
         }
     }

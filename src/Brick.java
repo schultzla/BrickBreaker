@@ -6,17 +6,18 @@ import java.awt.*;
 class Brick {
     private static final int WIDTH = 60, HEIGHT = 20;
     private int x, y;
+    private final int TOP_LEFT = x, TOP_RIGHT = x + WIDTH, BOTTOM_LEFT = y + HEIGHT;
     private int health;
 
     Brick(int x, int y) {
         this.x = x;
         this.y = y;
-        health = 50;
+        health = 100;
     }
 
     void checkHit(Ball b) {
-        if(b.getY() < y + HEIGHT + 10) {
-            if(b.getX() >= x -15 && b.getX() <= x + WIDTH + 15) {
+        if(b.getY() - 10 < y + HEIGHT) {
+            if(b.getX() > x && b.getX() < x + WIDTH) {
                 if(health > 0) updateHealth();
                 b.setyVel(-b.getyVel());
             }

@@ -16,8 +16,8 @@ class Ball {
     }
 
     void checkCollision(Paddle p) {
-        if(y > p.getY() - HEIGHT/2) {
-            if (x >= p.getX() - 2 && x <= p.getX() + p.getWidth() + 2) {
+        if(y > p.getY() + 3 - HEIGHT/2) {
+            if(x >= p.getX() - WIDTH/2 && x <= p.getX() + p.getWidth() + WIDTH/2) {
                 yVel = -yVel;
             } else {
                 y = p.getY() - HEIGHT/2;
@@ -30,8 +30,8 @@ class Ball {
     }
 
     void launchBall() {
-        xVel = -3;
-        yVel = -5;
+        xVel = 1;
+        yVel = -4;
         restart = false;
     }
 
